@@ -7,7 +7,7 @@ pipeline{
         stage("pulling code"){
             steps{
                 //we are pulling the code from github
-               sh "git clone https://github.com/dash-sarthak/flask-aws-pipeline.git"
+               git url: 'https://github.com/jfrogdev/project-examples.git'
             }
             post{
                 always{
