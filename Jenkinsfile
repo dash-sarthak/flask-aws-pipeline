@@ -1,20 +1,71 @@
 env.name = 'xcel2json'
 pipeline{
-    stage('pulling code'){
-        //we are pulling the code from github
-        git ('https://github.com/dash-sarthak/flask-aws-pipeline.git')
-        
-        //check if dockerfile exists
-        if (!fileExists("Dockerfile")){
-            error('Dockerfile kidar hai?')
+    agent{
+        label "node"
+    }
+    stages{
+        stage("pulling code"){
+            steps{
+                //we are pulling the code from github
+                git clone 'https://github.com/dash-sarthak/flask-aws-pipeline.git'
+            }
+            post{
+                always{
+                    echo "complete stage 1"
+                }
+                success{
+                    echo "code pulled"
+                }
+                failure{
+                    echo "failed fetch"
+                }
+            }
+        }
+        stage("building image"){
+            steps{
+                //building the docker image
+                sh "sudo docker build -t $name ."
+            }
+            post{
+                always{
+                    echo "complete stage 2"
+                }
+                success{
+                    echo "built image"
+                }
+                failure{
+                    echo "failed building image"
+                }
+            }
+        }
+        stage("Running the container"){
+            steps{
+                //running container
+                sh "sudo docker run -p 3000:5000 --name $name -d $name"
+                
+            }
+            post{
+                always{
+                    echo "complete stage 3"
+                }
+                success{
+                    echo "container running"
+                }
+                failure{
+                    echo "run failed"
+                }
+            }
         }
     }
-    stage('Build docker image'){
-        //building the docker image
-        sh "sudo docker build -t $name ."
+    post{
+        always{
+            echo "all stages completed"
+        }
+        success{
+            echo "all stages completed successfully"
+        }
+        failure{
+            echo "some or all stages failed "
+        }
     }
-    stage('Running the container'){
-        //running container
-        sh "sudo docker run -p 3000:5000 --name $name -d $name"
-    }
-}
+} 
