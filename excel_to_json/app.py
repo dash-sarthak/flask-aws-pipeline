@@ -19,6 +19,12 @@ def convert():
 def pull():
     return "This is GET request"
 
+<<<<<<< Updated upstream
 
 if __name__ == "__main__":
     app.run()
+=======
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
+    
+>>>>>>> Stashed changes
