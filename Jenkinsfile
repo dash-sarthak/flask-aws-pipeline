@@ -5,7 +5,7 @@ pipeline{
         git ('https://github.com/dash-sarthak/flask-aws-pipeline.git')
         
         //check if dockerfile exists
-        if(!fileExists("Dockerfile"){
+        if (!fileExists("Dockerfile")){
             error('Dockerfile kidar hai?')
         }
     }
