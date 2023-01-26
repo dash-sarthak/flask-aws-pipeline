@@ -25,9 +25,11 @@ pipeline{
             steps{
                 //changing dir
                 dir('flask-aws-pipeline') {
+                    sh "pwd"
+                    sh "ls"
                     //building the docker image
                     sh "sudo docker build -t $name ."
-                    sh "pwd"
+                    
                 }
                 
             }
