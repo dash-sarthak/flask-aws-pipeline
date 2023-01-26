@@ -24,6 +24,8 @@ pipeline{
         stage("building image"){
             steps{
                 //changing dir
+                sh "pwd"
+                sh "ls"
                 dir('flask-aws-pipeline') {
                     sh "pwd"
                     sh "ls"
