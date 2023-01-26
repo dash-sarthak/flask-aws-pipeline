@@ -23,8 +23,12 @@ pipeline{
         }
         stage("building image"){
             steps{
-                //building the docker image
-                sh "sudo docker build -t $name ."
+                //changing dir
+                dir('flask-aws-pipeline') {
+                    //building the docker image
+                    sh "sudo docker build -t $name ."
+                }
+                
             }
             post{
                 always{
